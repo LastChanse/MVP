@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -32,7 +33,10 @@ public class FoodFormController implements Initializable {
     public CheckBox chkWithSugar;
     public CheckBox chkWithPoppy;
     public CheckBox chkWithSesame;
+    public VBox foodPane;
+    public TextArea description;
 
+    final String FOOD = "Еда";
     final String FOOD_FRUIT = "Фрукт";
     final String FOOD_CHOCOLATE = "Шоколадка";
     final String FOOD_COOKIE = "Булочка";
@@ -98,6 +102,8 @@ public class FoodFormController implements Initializable {
         this.chocolatePane.setManaged(value.equals(FOOD_CHOCOLATE));
         this.cookiePane.setVisible(value.equals(FOOD_COOKIE));
         this.cookiePane.setManaged(value.equals(FOOD_COOKIE));
+        this.foodPane.setVisible(value.equals(FOOD));
+        this.foodPane.setManaged(value.equals(FOOD));
     }
 
     // обработчик нажатия на кнопку Сохранить
@@ -155,6 +161,8 @@ public class FoodFormController implements Initializable {
             } else if (food instanceof Chocolate) { // если шоколад
                 this.cmbFoodType.setValue(FOOD_CHOCOLATE);
                 this.cmbChocolateType.setValue(((Chocolate) food).type);
+            } else {
+                this.cmbFoodType.setValue(FOOD);
             }
         }
     }
@@ -180,6 +188,10 @@ public class FoodFormController implements Initializable {
             case FOOD_FRUIT:
                 result = new Fruit(kkal, title, this.chkIsFresh.isSelected());
                 break;
+            default:
+                Food food = new Food(kkal, title);
+                food.setDescription(this.description.getText());
+                result = food;
         }
         return result;
     }

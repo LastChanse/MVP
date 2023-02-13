@@ -34,8 +34,6 @@ public class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String[] descriptionArray = "Булочка с сахаром, с маком".substring("Булочка с сахаром, с маком".indexOf(' ')).split(",");
-        System.out.println("Булочка с сахаром, с маком".substring("Булочка с сахаром, с маком".indexOf(' ')));
         // теперь вызываем метод, вместо прямого присваивания
         // прям как со всякими кнопочками
         foodModel.addDataChangedListener(foods -> {
