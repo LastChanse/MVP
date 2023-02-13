@@ -162,6 +162,7 @@ public class FoodFormController implements Initializable {
                 this.cmbFoodType.setValue(FOOD_CHOCOLATE);
                 this.cmbChocolateType.setValue(((Chocolate) food).type);
             } else {
+                this.description.setText(food.description);
                 this.cmbFoodType.setValue(FOOD);
             }
         }

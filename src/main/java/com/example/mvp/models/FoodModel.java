@@ -1,5 +1,7 @@
 package com.example.mvp.models;
 
+import com.example.mvp.util.DataBase;
+
 import java.util.ArrayList;
 
 public class FoodModel {
@@ -21,13 +23,14 @@ public class FoodModel {
     public void load() {
         // это не трогаем
         foodList.clear();
+        DataBase.getDataFromDB(this);
         // заменили foodList на this
         // добавили второй параметр как false
-        this.add(new Fruit(1,100, "Яблоко", true), false);
-        this.add(new Chocolate(2,200, "шоколад Аленка", Chocolate.Type.milk), false);
-        this.add(new Cookie(3,300, "сладкая булочка с Маком", true, true, false), false);
+        //this.add(new Fruit(1,100, "Яблоко", true), false);
+        //this.add(new Chocolate(2,200, "шоколад Аленка", Chocolate.Type.milk), false);
+        //this.add(new Cookie(3,300, "сладкая булочка с Маком", true, true, false), false);
         // тут поменяли
-        this.emitDataChanged();
+        //this.emitDataChanged();
     }
 
     public void deleteAll() {
