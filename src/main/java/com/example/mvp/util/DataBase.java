@@ -8,20 +8,20 @@ import java.sql.*;
 
 public class DataBase {
     public static Connection connection;
-    public static Statement statement;
 
     public static void initialize() {
+        Statement statement = null;
         try {
             connection = DriverManager.getConnection(Config.DBUrl, Config.DBUser, Config.DBPassword);
             statement = connection.createStatement();
+            try {
+                statement.executeUpdate("CREATE TABLE IF NOT EXISTS `food` (`id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, `title` varchar(300) NOT NULL, `kkal` int(11) NOT NULL, `description` varchar(300) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
+            } catch (SQLException e) {
+                AlertUtils.showAlert("Не удалось создать таблицу", Alert.AlertType.ERROR);
+                throw new RuntimeException(e);
+            }
         } catch (Exception e) {
             AlertUtils.showAlert("Не удалось подключиться к БД", Alert.AlertType.ERROR);
-        }
-        try {
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `food` (`id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, `title` varchar(300) NOT NULL, `kkal` int(11) NOT NULL, `description` varchar(300) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;");
-        } catch (SQLException e) {
-            AlertUtils.showAlert("Не удалось создать таблицу", Alert.AlertType.ERROR);
-            throw new RuntimeException(e);
         }
     }
 
