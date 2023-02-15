@@ -1,6 +1,7 @@
 package com.example.mvp.gui;
 
 import com.example.mvp.models.*;
+import com.example.mvp.util.Config;
 import com.example.mvp.util.DataBase;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -9,22 +10,43 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainFormController implements Initializable {
+
+    public MainFormController() {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = null;
+        try {
+            fxmlLoader = new FXMLLoader(new File("src/main/java/com/example/mvp/gui/MainForm.fxml").toURL());
+            fxmlLoader.setController(this);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        stage.setTitle(Config.appName);
+        stage.getIcons().add(new Image(new File("file:src/main/resources/com/example/mvp/"+Config.appIconPath).getPath()));
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public TableView mainTable;
     // можно удалить этот список, наш контроллер больше данных не хранит
     //ObservableList<Food> foodList = FXCollections.observableArrayList();
@@ -32,8 +54,10 @@ public class MainFormController implements Initializable {
     // создали экземпляр класса модели
     FoodModel foodModel = new FoodModel();
 
+    public MenuBar topMenu;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        topMenu.setDisable(AuthController.user.getRoleName().equals("Консультант")); // Консультантам запрещена работа с данными
         // теперь вызываем метод, вместо прямого присваивания
         // прям как со всякими кнопочками
         foodModel.addDataChangedListener(foods -> {

@@ -8,4 +8,5 @@ module com.example.mvp {
     exports com.example.mvp;
     exports com.example.mvp.gui;
     exports com.example.mvp.models;
+    opens com.example.mvp.gui to javafx.fxml;
 }

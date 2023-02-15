@@ -1,5 +1,6 @@
 package com.example.mvp;
 
+import com.example.mvp.gui.AuthController;
 import com.example.mvp.util.Config;
 import com.example.mvp.util.DataBase;
 import javafx.application.Application;
@@ -14,13 +15,8 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        new AuthController();
         DataBase.initialize();
-        FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/java/com/example/mvp/gui/MainForm.fxml").toURL());
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle(Config.appName);
-        stage.getIcons().add(new Image(getClass().getResource(Config.appIconPath).openStream()));
-        stage.setScene(scene);
-        stage.show();
     }
 
     public static void main(String[] args) {
